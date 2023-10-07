@@ -23,6 +23,9 @@ jobs:
             const head = "auth";
             const base = "main";
 
+            console.log({title,body,head,base})
+            console.log(github.pulls)
+
             const { data: pullRequest } = await github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
