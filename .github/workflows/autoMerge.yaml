@@ -1,0 +1,51 @@
+name: Create Pull Request on Auth Push
+
+on:
+  push:
+    branches:
+      - auth
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        id: create_pr
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const title = "Automated Pull Request";
+            const body = "This pull request was automatically generated when changes were pushed to the 'auth' branch.";
+            const head = "auth";
+            const base = "main";
+
+            const { data: pullRequest } = await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              head: head,
+              base: base
+            });
+
+            console.log(`Pull Request created: ${pullRequest.html_url}`);
+
+      - name: Merge Pull Request
+        if: ${{ steps.create_pr.outputs.pull_request_number }}
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pullRequestId = context.payload.pull_request.number;
+
+            await github.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pullRequestId
+            });
+
+            console.log(`Pull Request merged successfully.`);
