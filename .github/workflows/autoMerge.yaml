@@ -18,13 +18,14 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const github = context.github;
             const title = "Automated Pull Request";
             const body = "This pull request was automatically generated when changes were pushed to the 'auth' branch.";
             const head = "auth";
             const base = "main";
 
             console.log({title,body,head,base})
-            console.log(github)
+            console.log({github})
 
             const { data: pullRequest } = await github.pulls.create({
               owner: context.repo.owner,
