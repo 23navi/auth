@@ -24,7 +24,7 @@ jobs:
             const base = "main";
 
             console.log({title,body,head,base})
-            console.log(github.pulls)
+            console.log(github)
 
             const { data: pullRequest } = await github.pulls.create({
               owner: context.repo.owner,
