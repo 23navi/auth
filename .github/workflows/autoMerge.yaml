@@ -18,7 +18,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const github = context.github;
+            
             const title = "Automated Pull Request";
             const body = "This pull request was automatically generated when changes were pushed to the 'auth' branch.";
             const head = "auth";
