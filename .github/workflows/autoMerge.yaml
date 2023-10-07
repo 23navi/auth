@@ -27,7 +27,7 @@ jobs:
             console.log({title,body,head,base})
             console.log({github})
 
-            const { data: pullRequest } = await github.pulls.create({
+            const { data: pullRequest } = await github.OctokitWithDefaults.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: title,
