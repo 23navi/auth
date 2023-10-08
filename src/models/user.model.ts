@@ -10,8 +10,6 @@ import { nanoid } from "nanoid";
 import argon2 from "argon2";
 import log from "../utils/logger";
 
-console.log(nanoid());
-
 @pre<User>("save", async function () {
   if (!this.isModified("password")) {
     return;
@@ -39,7 +37,9 @@ export class User {
 
   @prop({
     required: true,
-    default: () => {},
+    default: () => {
+      return nanoid();
+    },
   })
   verificationCode: string;
 
