@@ -13,7 +13,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-app.use(router);
+app.use("/api", router);
 
 app.listen(port, () => {
   log.info(`Server is running on port ${port}`);
