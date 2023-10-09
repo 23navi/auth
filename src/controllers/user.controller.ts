@@ -3,6 +3,7 @@ import {
   CreateUserInput,
   VerifyUserInput,
   ForgotPasswordInput,
+  ResetPasswordInput,
 } from "../schemas/user.schema";
 import {
   createUser,
@@ -99,4 +100,29 @@ export async function forgotPasswordHandler(
   });
 
   return res.send(message);
+}
+
+export async function resetPasswordHandler(
+  req: Request<ResetPasswordInput["params"], {}, ResetPasswordInput["body"]>,
+  res: Response
+) {
+  // We can also think of adding code that will expire the password reset code after a certain time.
+  const { id, passwordResetCode } = req.params;
+  const { password } = req.body;
+
+  const user = await findUserById(id);
+
+  if (!user) {
+    return res.sendStatus(404);
+  }
+
+  if (user.passwordResetCode !== passwordResetCode) {
+    return res.sendStatus(403);
+  }
+
+  user.password = password;
+  user.verificationCode = "";
+  user.save();
+
+  return res.sendStatus(200);
 }
