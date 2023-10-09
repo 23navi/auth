@@ -5,6 +5,7 @@ import {
   modelOptions,
   pre,
   prop,
+  index,
 } from "@typegoose/typegoose";
 import { nanoid } from "nanoid";
 import argon2 from "argon2";
@@ -18,6 +19,7 @@ import log from "../utils/logger";
   this.password = hash;
   return;
 })
+@index({ email: 1 }, { unique: true })
 @modelOptions({
   schemaOptions: { timestamps: true },
   options: { allowMixed: Severity.ALLOW },

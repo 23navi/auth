@@ -31,3 +31,13 @@ export const verifyUserSchema = object({
   }),
 });
 export type VerifyUserInput = TypeOf<typeof verifyUserSchema>["params"];
+
+export const forgotPasswordSchema = object({
+  body: object({
+    email: string({
+      required_error: "Email is required",
+    }).email("Not a valid email"),
+  }),
+});
+
+export type ForgotPasswordInput = TypeOf<typeof forgotPasswordSchema>["body"];
