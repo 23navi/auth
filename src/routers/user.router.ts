@@ -1,11 +1,16 @@
 import express from "express";
 import config from "config";
 const router = express.Router();
-import { createUserSchema, verifyUserSchema } from "../schemas/user.schema";
+import {
+  createUserSchema,
+  verifyUserSchema,
+  forgotPasswordSchema,
+} from "../schemas/user.schema";
 import validateRequest from "../middlewares/validateResources";
 import {
   creatUserHandler,
   verifyUserHandler,
+  forgotPasswordHandler,
 } from "../controllers/user.controller";
 
 router.post("/", validateRequest(createUserSchema), creatUserHandler);
@@ -20,6 +25,12 @@ router.get(
   "/verify/:userId/:verificationCode",
   validateRequest(verifyUserSchema),
   verifyUserHandler
+);
+
+router.post(
+  "/forgotpassword",
+  validateRequest(forgotPasswordSchema),
+  forgotPasswordHandler
 );
 
 export default router;
