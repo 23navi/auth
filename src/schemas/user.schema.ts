@@ -22,5 +22,12 @@ export const createUserSchema = object({
     path: ["passwordConfirmation"],
   }),
 });
-
 export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
+
+export const verifyUserSchema = object({
+  params: object({
+    userId: string(),
+    verificationCode: string(),
+  }),
+});
+export type VerifyUserInput = TypeOf<typeof verifyUserSchema>["params"];
