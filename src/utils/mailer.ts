@@ -29,13 +29,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail(payload: SendMailOptions) {
-//   const message = {
-//     from: payload.from,
-//     to: payload.to,
-//     subject: payload.subject,
-//     text: payload.text,
-//   };
+export async function sendEmail(payload: SendMailOptions) {
+  //   const message = {
+  //     from: payload.from,
+  //     to: payload.to,
+  //     subject: payload.subject,
+  //     text: payload.text,
+  //   };
   try {
     //     transporter.sendMail(message, (err, info) => {
     //       if (err) {
@@ -52,9 +52,9 @@ async function sendEmail(payload: SendMailOptions) {
   }
 }
 
-sendEmail({
-  from: "navisureka23@gmail.com",
-  to: "navisureka23@gmail.com",
-  subject: "hello",
-  text: "hi there",
-});
+// sendEmail({
+//   from: "navisureka23@gmail.com",
+//   to: "navisureka23@gmail.com",
+//   subject: "hello",
+//   text: "hi there",
+// });
