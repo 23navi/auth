@@ -1,7 +1,17 @@
 import { Request, Response } from "express";
-import { CreateUserInput, VerifyUserInput } from "../schemas/user.schema";
-import { createUser, findUserById } from "../services/user.service";
+import {
+  CreateUserInput,
+  VerifyUserInput,
+  ForgotPasswordInput,
+} from "../schemas/user.schema";
+import {
+  createUser,
+  findUserById,
+  findUserByEmail,
+} from "../services/user.service";
 import { sendEmail } from "../utils/mailer";
+import log from "../utils/logger";
+import { nanoid } from "nanoid";
 
 export async function creatUserHandler(
   req: Request<{}, {}, CreateUserInput>,
@@ -27,8 +37,6 @@ export async function creatUserHandler(
     }
     return res.status(500).send(e);
   }
-
-  res.send(body);
 }
 
 export async function verifyUserHandler(
@@ -57,4 +65,38 @@ export async function verifyUserHandler(
   await user.save();
 
   return res.sendStatus(200);
+}
+
+export async function forgotPasswordHandler(
+  req: Request<{}, {}, ForgotPasswordInput>,
+  res: Response
+) {
+  const userEmail = req.body.email;
+
+  const message = "Please check you email for the password reset code.";
+
+  const user = await findUserByEmail(userEmail);
+
+  if (!user) {
+    log.debug(`No user with that email: ${userEmail}`);
+    return res.send(message);
+  }
+
+  if (!user.verified) {
+    return res.send("User is not verified, please verify your account first");
+  }
+
+  // Create new forgot password code and send it to the user's email after attaching it to user.passwordResetCode
+
+  user.verificationCode = nanoid();
+  user.save();
+
+  sendEmail({
+    from: "navisureka23@gmail.com",
+    to: user.email,
+    subject: "Use the given code to reset your password",
+    text: `To reset the password use this code with id, please use this code: ${user.verificationCode}\n or click below to verify: http://localhost:3005/api/users/verify/${user._id}/${user.verificationCode}\n\nThank you`,
+  });
+
+  return res.send(message);
 }
