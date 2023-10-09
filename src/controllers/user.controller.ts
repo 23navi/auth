@@ -18,7 +18,7 @@ export async function creatUserHandler(
       from: "navisureka23@gmail.com",
       to: user.email,
       subject: "Please confirm you account",
-      text: `To confirm the email, please use this code: ${user.verificationCode}`,
+      text: `To confirm the email, please use this code: ${user.verificationCode}\n or click below to verify: http://localhost:3005/api/users/verify/${user._id}/${user.verificationCode}\n\nThank you`,
     });
     return res.status(201).send(user);
   } catch (e: any) {
