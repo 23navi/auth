@@ -33,6 +33,7 @@
     "nanoid": "^3.3.4",
     "nodemailer": "^6.9.5",
     "pino": "^8.15.6",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zod-validation-error": "^1.5.0"
   }
 }
