@@ -102,6 +102,7 @@ export async function forgotPasswordHandler(
   return res.send(message);
 }
 
+// One thing is missing, how do we manage expiration of reset token?
 export async function resetPasswordHandler(
   req: Request<ResetPasswordInput["params"], {}, ResetPasswordInput["body"]>,
   res: Response
@@ -112,8 +113,15 @@ export async function resetPasswordHandler(
 
   const user = await findUserById(id);
 
-  if (!user) {
+  if (!user || !user.verified) {
     return res.sendStatus(404);
+  }
+  if (!user.verified) {
+    return res.status(404).send("First verify the account");
+  }
+
+  if (!user.passwordResetCode) {
+    return res.sendStatus(403);
   }
 
   if (user.passwordResetCode !== passwordResetCode) {
@@ -121,7 +129,7 @@ export async function resetPasswordHandler(
   }
 
   user.password = password;
-  user.verificationCode = "";
+  user.passwordResetCode = null;
   user.save();
 
   return res.sendStatus(200);
