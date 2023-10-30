@@ -28,7 +28,6 @@ export function verifyJwt<T>(
   );
   try {
     const decoded = jwt.verify(token, publicKey) as T;
-    console.log({ decoded });
     return decoded;
   } catch (e) {
     return null;
