@@ -1,0 +1,3 @@
+// All the strategies will go here, like email/password, google login, facebook ....
+
+// We will only have email password strategy
