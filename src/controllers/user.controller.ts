@@ -134,3 +134,7 @@ export async function resetPasswordHandler(
 
   return res.sendStatus(200);
 }
+
+export async function getMeHandler(req: Request, res: Response) {
+  return res.send(res.locals.user);
+}
