@@ -6,8 +6,20 @@ export function signJwt(
   keyName: "accessTokenPrivateKey" | "refreshTokenPrivateKey",
   options?: jwt.SignOptions | undefined
 ) {
-  const signingKey = config.get(keyName);
+  const signingKey = Buffer.from(
+    config.get<string>(keyName),
+    "base64"
+  ).toString("ascii");
+
+  console.log({ signingKey });
+
+  return jwt.sign(object, signingKey, {
+    ...(options && options),
+    algorithm: "RS256",
+  });
 }
+
+signJwt({ abc: "abc" }, "accessTokenPrivateKey");
 
 export function verifyJwt(
   keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
