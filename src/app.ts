@@ -4,6 +4,7 @@ import config from "config";
 import connectToDb from "./utils/connectToDb";
 import log from "./utils/logger";
 import router from "./routers";
+import { signJwt } from "./utils/jwt";
 
 const port = config.get<number>("port");
 

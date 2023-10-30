@@ -19,8 +19,18 @@ export function signJwt(
   });
 }
 
-signJwt({ abc: "abc" }, "accessTokenPrivateKey");
-
-export function verifyJwt(
+export function verifyJwt<T>(
+  token: string,
   keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
-) {}
+): T | null {
+  const publicKey = Buffer.from(config.get<string>(keyName), "base64").toString(
+    "ascii"
+  );
+  try {
+    const decoded = jwt.verify(token, publicKey) as T;
+    console.log({ decoded });
+    return decoded;
+  } catch (e) {
+    return null;
+  }
+}
