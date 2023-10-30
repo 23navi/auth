@@ -13,6 +13,7 @@ import {
   verifyUserHandler,
   forgotPasswordHandler,
   resetPasswordHandler,
+  getMeHandler,
 } from "../controllers/user.controller";
 
 router.post("/", validateRequest(createUserSchema), creatUserHandler);
@@ -41,5 +42,7 @@ router.post(
   validateRequest(resetPasswordSchema),
   resetPasswordHandler
 );
+
+router.get("/me", getMeHandler);
 
 export default router;
