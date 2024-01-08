@@ -1,5 +1,4 @@
 import express from "express";
-import config from "config";
 import userRouter from "./user.router";
 import authRouter from "./auth.router";
 
