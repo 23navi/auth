@@ -1,17 +1,11 @@
 import {
-  DocumentType,
   Severity,
   getModelForClass,
   modelOptions,
-  pre,
   prop,
-  index,
   Ref,
 } from "@typegoose/typegoose";
-import { nanoid } from "nanoid";
 import { User } from "./user.model";
-
-import log from "../utils/logger";
 
 @modelOptions({
   schemaOptions: { timestamps: true },

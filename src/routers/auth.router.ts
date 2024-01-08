@@ -1,5 +1,4 @@
 import express from "express";
-import config from "config";
 const router = express.Router();
 import validateRequest from "../middlewares/validateResources";
 import { createSessionSchema } from "../schemas/auth.schema";

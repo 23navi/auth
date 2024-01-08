@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { AnyZodObject } from "zod";
+import type { Request, Response, NextFunction } from "express";
+import type { AnyZodObject } from "zod";
 import { fromZodError } from "zod-validation-error";
 
 const validateResource = (schema: AnyZodObject) => {
