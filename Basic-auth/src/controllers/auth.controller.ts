@@ -22,7 +22,7 @@ export async function creatSessionHandler(
   if (!user) {
     return res.json({ message: "Email/password not correct" });
   }
-  if (user.verified) {
+  if (!user.verified) {
     return res.json({ message: "Verify your account first" });
   }
   if (!(await user.validatePassword(candidatePassword))) {

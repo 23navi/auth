@@ -24,11 +24,13 @@ router.post(
   validateRequest(verifyUserSchema),
   verifyUserHandler
 );
-router.get(
-  "/verify/:userId/:verificationCode",
-  validateRequest(verifyUserSchema),
-  verifyUserHandler
-);
+
+// Frontend will send a post request to backend to verify the account, we don't want them to send get request directly to backend
+// router.get(
+//   "/verify/:userId/:verificationCode",
+//   validateRequest(verifyUserSchema),
+//   verifyUserHandler
+// );
 
 router.post(
   "/forgotpassword",
