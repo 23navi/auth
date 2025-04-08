@@ -22,7 +22,7 @@ export async function creatSessionHandler(
   if (!user) {
     return res.json({ message: "Email/password not correct" });
   }
-  if (user.verified) {
+  if (!user.verified) {
     return res.json({ message: "Verify your account first" });
   }
   if (!(await user.validatePassword(candidatePassword))) {
@@ -41,7 +41,7 @@ export async function creatSessionHandler(
 
   // 3) Send tokens back (Sending as body not header)
 
-  res.send({ accessToken, refreshToken });
+  res.send({ email, accessToken, refreshToken });
 }
 
 export async function refreshSessionHandler(req: Request, res: Response) {
