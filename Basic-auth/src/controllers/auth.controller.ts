@@ -41,7 +41,7 @@ export async function creatSessionHandler(
 
   // 3) Send tokens back (Sending as body not header)
 
-  res.send({ accessToken, refreshToken });
+  res.send({ email, accessToken, refreshToken });
 }
 
 export async function refreshSessionHandler(req: Request, res: Response) {

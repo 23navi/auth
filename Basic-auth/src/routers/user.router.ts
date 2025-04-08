@@ -44,6 +44,7 @@ router.post(
   resetPasswordHandler
 );
 
+GET /api/users/me
 router.get("/me", getMeHandler);
 
 export default router;
